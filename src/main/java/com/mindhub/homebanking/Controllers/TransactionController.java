@@ -4,7 +4,9 @@ import com.mindhub.homebanking.Repositories.AccountRepository;
 import com.mindhub.homebanking.Repositories.CardRepository;
 import com.mindhub.homebanking.Repositories.ClientRepository;
 import com.mindhub.homebanking.Repositories.TransactionRepository;
+import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.CardTransactionDTO;
+import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 public class TransactionController {
@@ -109,6 +118,32 @@ public class TransactionController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 
+    }
+
+    @GetMapping("/api/transactionFilter")
+    public List<TransactionDTO> filterTransactions(@RequestParam String fromDate, @RequestParam String thruDate, @RequestParam String number, Authentication authentication){
+
+        Account account = accountRepository.findByNumber(number);
+
+        LocalDate from = LocalDate.parse(fromDate);
+        LocalDate thru = LocalDate.parse(thruDate);
+
+
+        LocalTime localTime = LocalTime.MIDNIGHT;
+        LocalDateTime fromDateTime = LocalDateTime.of(from, localTime);
+        LocalDateTime thruDateTime = LocalDateTime.of(thru, localTime);
+
+        List<Transaction> transactions= transactionRepository.findByAccount(account);
+        List<Transaction> transactionsFiltered = new ArrayList<>();
+
+        for(int i = 0; i < transactions.size(); i++){
+
+        if(transactions.get(i).getDate().isAfter(fromDateTime) && transactions.get(i).getDate().isBefore(thruDateTime)){
+            transactionsFiltered.add(transactions.get(i));
+        }
+        }
+
+        return transactionsFiltered.stream().map(transaction -> new TransactionDTO(transaction)).collect(toList());
     }
 
 }

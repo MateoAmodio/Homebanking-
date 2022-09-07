@@ -47,6 +47,8 @@ public class HomebankingApplication {
 			Transaction transaction4 = new Transaction(TransactionType.DEBIT, -200, "Compra tienda xy" ,LocalDateTime.now(), cuenta2);
 			Transaction transaction5 = new Transaction(TransactionType.CREDIT, 6000, "transferencia recibida" ,LocalDateTime.now(), cuenta3);
 			Transaction transaction6 = new Transaction(TransactionType.DEBIT, -100, "Compra tienda xy" ,LocalDateTime.now(), cuenta3);
+			Transaction transaction7 = new Transaction(TransactionType.CREDIT, 600, "transferencia recibida" ,LocalDateTime.now().plusYears(1), cuenta3);
+			Transaction transaction8 = new Transaction(TransactionType.DEBIT, -10000, "Compra tienda xy" ,LocalDateTime.now().plusYears(1), cuenta3);
 
 			Loan loan1 = new Loan("Hipotecario", 500000, Arrays.asList(12,24,36,48,60), 12);
 			Loan loan2 = new Loan("Personal", 100000, Arrays.asList(6,12,24), 5);
@@ -79,6 +81,8 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction4);
 			transactionRepository.save(transaction5);
 			transactionRepository.save(transaction6);
+			transactionRepository.save(transaction7);
+			transactionRepository.save(transaction8);
 			loanRepository.save(loan1);
 			loanRepository.save(loan2);
 			loanRepository.save(loan3);
