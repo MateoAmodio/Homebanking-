@@ -35,7 +35,6 @@ public class Account {
         this.accountType = accountType;
     }
 
-    ///aaaaaaaaaaaaaaaaaaaaa
     public Account() {}
 
     /****************** MÉTODOS ******************/
