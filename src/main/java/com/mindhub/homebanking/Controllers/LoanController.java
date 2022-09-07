@@ -74,8 +74,6 @@ public class LoanController {
             return new ResponseEntity<>("La cuenta no le pertenece.", HttpStatus.FORBIDDEN);
         }
 
-
-
         account.setBalance(account.getBalance() + loanApplicationDTO.getAmount());
         ClientLoan newLoan = new ClientLoan(loanApplicationDTO.getAmount() + (0.01 * loan.getPercentage() * loanApplicationDTO.getAmount()),loanApplicationDTO.getPayments(), client, loan );
         Transaction transactionCredit = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loan.getName(), LocalDateTime.now(), account);
