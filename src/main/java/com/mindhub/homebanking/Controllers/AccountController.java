@@ -48,14 +48,14 @@ public class AccountController {
 
 
     @PostMapping("/api/clients/current/accounts")
-    public ResponseEntity<Object> createAccounts(/*@RequestParam AccountType accountType, */Authentication authentication){
+    public ResponseEntity<Object> createAccounts(Authentication authentication){
         Client client = this.clientRepository.findByEmail(authentication.getName());
 
         if(client.getAccounts().size() >= 3){
          return new ResponseEntity<>("Se supero el numero maximo de cuentas", HttpStatus.FORBIDDEN);
         }
 
-        Account account = new Account( generateRandomNumber(1, 99999999, accountRepository), LocalDateTime.now(), 0, AccountType.CORRIENTE/*accountType*/);
+        Account account = new Account( generateRandomNumber(1, 99999999, accountRepository), LocalDateTime.now(), 0, AccountType.CORRIENTE);
 
         client.addAccount(account);
         accountRepository.save(account);
