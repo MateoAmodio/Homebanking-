@@ -9,7 +9,7 @@ public class ClientLoanDTO {
     private long loanid;
     public String name;
     public double amount;
-    public int payment;
+    public int payments;
 
     /*************** CONSTRUCTORES ***************/
 
@@ -18,7 +18,7 @@ public class ClientLoanDTO {
         this.loanid = clientLoan.getLoan().getId();
         this.name = clientLoan.getName();
         this.amount = clientLoan.getAmount();
-        this.payment = clientLoan.getPayments();
+        this.payments = clientLoan.getPayments();
     }
 
     /****************** MÉTODOS ******************/
@@ -27,5 +27,5 @@ public class ClientLoanDTO {
     public long getLoanid() {return loanid;}
     public String getName() {return name;}
     public double getAmount() {return amount;}
-    public int getPayment() {return payment;}
+    public int getPayments() {return payments;}
 }
